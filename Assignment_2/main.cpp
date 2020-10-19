@@ -12,7 +12,7 @@
 #include <thread> //for multithreading
 #include "tbb/task_scheduler_init.h" //for tbb task scheduler
 #include "tbb/parallel_for.h" //to parallelize the for loop
-#include "tbb/blocked_range.h" //for the chunks
+#include "tbb/blocked_range.h" //for the index
 
 using namespace tbb;
 using namespace std;
@@ -40,8 +40,8 @@ vector<int> nineCoordinates;
 
 
 //macros for grid
-#define ROWS 200
-#define COLUMNS 200
+#define ROWS 500
+#define COLUMNS 500
 
 //macro for fps
 #define FPS 30
@@ -718,7 +718,7 @@ void keyboard(unsigned char key, int x, int y) //we dont need to know mouse posi
 	if (key == 32) //pressing spacebar will generate a new random injection of medicine cells (32 == ascii code)
 	{
 		task_scheduler_init init;
-		parallel_for(blocked_range<int>(0, 1), injectMedicineCells(), auto_partitioner());
+		parallel_for(blocked_range<int>(0, 1), injectMedicineCells(), auto_partitioner()); //index range, computation, partitioner (how to divide data)
 
 	}
 }
